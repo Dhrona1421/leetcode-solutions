@@ -3,26 +3,16 @@ class Solution:
         if not digits:
             return []
 
-        phone = {
-            '2': 'abc',
-            '3': 'def',
-            '4': 'ghi',
-            '5': 'jkl',
-            '6': 'mno',
-            '7': 'pqrs',
-            '8': 'tuv',
-            '9': 'wxyz'
-        }
+        phone = ["", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"]
+        ans = []
 
-        result = []
-
-        def backtrack(index, current):
-            if index == len(digits):
-                result.append(current)
+        def solve(i, s):
+            if i == len(digits):
+                ans.append(s)
                 return
 
-            for ch in phone[digits[index]]:
-                backtrack(index + 1, current + ch)
+            for c in phone[int(digits[i])]:
+                solve(i + 1, s + c)
 
-        backtrack(0, "")
-        return result
+        solve(0, "")
+        return ans
