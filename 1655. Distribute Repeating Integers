@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool canDistribute(vector<int>& nums, vector<int>& quantity) {
+        unordered_map<int,int> mp;
+        for (int x : nums) mp[x]++;
+
+        vector<int> cnt;
+        for (auto [x, c] : mp) cnt.push_back(c);
+
+        sort(quantity.rbegin(), quantity.rend());
+
+        function<bool(int,int)> dfs = [&](int i, int mask) {
+            if (i == quantity.size()) return true;
+
+            for (int j = 0; j < cnt.size(); j++) {
+                if (cnt[j] >= quantity[i]) {
+                    cnt[j] -= quantity[i];
+                    if (dfs(i + 1, mask)) return true;
+                    cnt[j] += quantity[i];
+                }
+            }
+            return false;
+        };
+
+        return dfs(0, 0);
+    }
+};
