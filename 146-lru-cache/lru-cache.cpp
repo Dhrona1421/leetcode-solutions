@@ -9,7 +9,7 @@ public:
     }
 
     int get(int key) {
-        if (mp.find(key) == mp.end())
+        if (!mp.count(key))
             return -1;
 
         auto it = mp[key];
@@ -23,11 +23,10 @@ public:
     }
 
     void put(int key, int value) {
-        if (mp.find(key) != mp.end()) {
+        if (mp.count(key)) {
             lru.erase(mp[key]);
         } else if (lru.size() == capacity) {
-            int keyToRemove = lru.back().first;
-            mp.erase(keyToRemove);
+            mp.erase(lru.back().first);
             lru.pop_back();
         }
 
